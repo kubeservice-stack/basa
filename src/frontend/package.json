@@ -31,6 +31,8 @@
     "ace": "^1.3.0",
     "bootstrap": "^4.3.1",
     "brace": "^0.11.1",
+    "browserslist": "^4.21.4",
+    "caniuse-lite": "^1.0.30001434",
     "core-js": "^2.5.4",
     "cron-parser": "^2.6.0",
     "d3-scale": "^2.1.0",
@@ -44,6 +46,7 @@
     "moment": "^2.22.2",
     "mutationobserver-shim": "^0.3.2",
     "ngx-markdown": "^8.1.0",
+    "ngx-md": "8.1.6",
     "particlesjs": "^2.2.3",
     "raven-js": "^3.21.0",
     "rxjs": "^6.5.2",
@@ -51,7 +54,6 @@
     "sockjs-client": "^1.1.4",
     "tslib": "^1.9.0",
     "xterm": "3.11.0",
-    "ngx-md": "8.1.6",
     "zone.js": "^0.9.1"
   },
   "devDependencies": {
