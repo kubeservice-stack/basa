@@ -1,6 +1,5 @@
 /**
  * 使用方法请参考 wiki 文档
- * https://github.com/Qihoo360/wayne/wiki/Wayne-dev-i18n
  */
 const fs = require('fs');
 const path = require('path');

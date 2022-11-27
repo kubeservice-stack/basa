@@ -1,10 +1,10 @@
 # requiring Docker 17.05 or higher on the daemon and client
 # see https://docs.docker.com/develop/develop-images/multistage-build/
 # BUILD COMMAND :
-# docker --build-arg RELEASE_VERSION=v1.0.0 -t infra/wayne:v1.0.0 .
+# docker --build-arg RELEASE_VERSION=v1.0.0 -t infra/basa:v1.0.0 .
 
 # build ui
-FROM dongjiang1989/wayne-ui-builder:v1.0.2 as frontend
+FROM dongjiang1989/basa-ui-builder:v1.0.2 as frontend
 
 COPY src/frontend /workspace
 
@@ -12,7 +12,7 @@ RUN cd /workspace && \
     npm run build:aot
 
 # build server
-FROM openresty/openresty:1.15.8.1-1-centos
+FROM openresty/openresty:1.15.8.3-2-centos
 
 COPY --from=frontend /workspace/dist/ /usr/local/openresty/nginx/html/
 

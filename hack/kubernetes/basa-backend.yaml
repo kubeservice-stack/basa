@@ -94,7 +94,7 @@ spec:
           name: basa-backend
       containers:
       - name: basa
-        image: '360cloud/basa-backend:latest'
+        image: 'dongjiang1989/basa-backend:latest'
         command:
         - /opt/basa/backend
         - apiserver

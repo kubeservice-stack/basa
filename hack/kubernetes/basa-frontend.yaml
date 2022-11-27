@@ -41,7 +41,7 @@ spec:
             path: config.js
       containers:
       - name: basa
-        image: '360cloud/basa-frontend:latest'
+        image: 'dongjiang1989/basa-frontend:latest'
         resources:
           limits:
             cpu: '0.5'

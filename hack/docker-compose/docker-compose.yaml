@@ -1,4 +1,4 @@
-version: '3'
+version: '1'
 
 services:
 
@@ -13,13 +13,13 @@ services:
     ports:
     - "3306:3306"
 
-  wayne-backend:
-    image: 360cloud/wayne-backend:latest
-    command: /opt/wayne/backend
+  basa-backend:
+    image: dongjiang1989/basa-backend:latest
+    command: /opt/basa/backend
     environment:
       GOPATH: "/go"
     volumes:
-    - ./conf/app.conf:/opt/wayne/conf/app.conf
+    - ./conf/app.conf:/opt/basa/conf/app.conf
     depends_on:
     - mysql
     restart: always
@@ -28,12 +28,12 @@ services:
     ports:
     - "8080:8080"
 
-  wayne-frontend:
-    image: 360cloud/wayne-frontend:latest
+  basa-frontend:
+    image: dongjiang1989/basa-frontend:latest
     volumes:
     - ./conf/config.js:/usr/local/openresty/nginx/html/config.js
     depends_on:
-    - wayne-backend
+    - base-backend
     restart: always
     networks:
     - default

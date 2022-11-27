@@ -1,4 +1,4 @@
-FROM node:10.16
+FROM node:16.13
 
 WORKDIR /workspace
 
@@ -6,4 +6,4 @@ COPY src/frontend/package.json  /workspace
 
 COPY src/frontend/package-lock.json  /workspace
 
-RUN npm install --registry=https://registry.npmmirror.com
+RUN npm install --legacy-peer-deps --registry=https://registry.npmmirror.com
