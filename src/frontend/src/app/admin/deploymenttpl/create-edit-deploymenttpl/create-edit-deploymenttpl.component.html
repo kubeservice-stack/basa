@@ -1,0 +1,34 @@
+<clr-modal [(clrModalOpen)]="createDeploymentTplOpened" [clrModalSize]="'lg'" #modal>
+  <h3 class="modal-title">{{deploymentTplTitle}}
+    <wayne-modal-operate [modal]="modal" *ngIf="createDeploymentTplOpened"></wayne-modal-operate>
+  </h3>
+  <div class="modal-body">
+    <form #deploymentTplForm="ngForm" clrForm clrLayout="horizontal">
+        <clr-select-container>
+          <label class="required">{{'DEPLOYMENT_ADMIN.TMP.CREATE.DEPLOYMENT' | translate}}</label>
+          <select id="deployment_app_id" clrSelect [(ngModel)]="deploymentTpl.deploymentId" [disabled]="actionType==1"
+            name="deployment_app_id">
+            <option *ngFor="let deployment of deployments" [ngValue]="deployment.id"
+              [selected]="deployment.id === deploymentTpl.deploymentId">{{deployment.name}}
+            </option>
+          </select>
+        </clr-select-container>
+      
+        <div class="clr-form-control clr-row">
+          <label for="deployment_metadata" class="clr-control-label">{{'DEPLOYMENT_ADMIN.TMP.CREATE.TMP' | translate}}</label>
+          <div class="clr-control-container clr-col-md-10 clr-col-12">
+            <wayne-ace-editor-box></wayne-ace-editor-box>
+          </div>
+        </div>
+        <clr-textarea-container>
+          <label>{{'DEPLOYMENT_ADMIN.TMP.CREATE.DESCRIPTION' | translate}}</label>
+          <textarea id="deployment_description" clrTextarea [(ngModel)]="deploymentTpl.description" name="deployment_description" rows="3"></textarea>
+        </clr-textarea-container>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="onCancel()">{{'BUTTON.CANCEL' | translate}}</button>
+    <button type="button" class="btn btn-primary" [disabled]="!isValid"
+            (click)="onSubmit()">{{'BUTTON.SUBMIT' | translate}}</button>
+  </div>
+</clr-modal>

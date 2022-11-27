@@ -1,0 +1,42 @@
+<clr-modal [(clrModalOpen)]="createGroupOpened" [clrModalSize]="'lg'">
+  <h3 class="modal-title">{{groupTitle}}</h3>
+  <div class="modal-body">
+    <form #groupForm="ngForm" clrForm clrLayout="horizontal">
+      <clr-select-container>
+        <label class="required">类别</label>
+        <select clrSelect id="group_type" [(ngModel)]="group.type" [disabled]="actionType==1" name="group_type">
+          <option *ngFor="let type of groupType" [ngValue]="type.id" [selected]="type.id === group.type">{{type.name}}
+          </option>
+        </select>
+      </clr-select-container>
+        
+      <clr-input-container>
+        <label class="required">{{'TITLE.NAME' | translate}}</label>
+        <input type="text" clrInput id="group_name" [(ngModel)]="group.name" name="group_name" size="36" required maxlength="24" />
+        <clr-control-error>required</clr-control-error>
+      </clr-input-container>
+      
+      <clr-input-container>
+        <label class="required">{{'TITLE.DESCRIPTION' | translate}}</label>
+        <input type="text" clrInput id="group_comment" [(ngModel)]="group.comment" name="group_comment" size="36" required
+          maxlength="128">
+          <clr-control-error>群组描述不符合规范</clr-control-error>
+      </clr-input-container>
+      
+      <div class="clr-form-control clr-row">
+        <label class="clr-control-label required">权限</label>
+        <div class="clr-control-container clr-col-md-10 clr-col-12">
+          <ng2-dual-list-box name="group_permission" [data]="allPermissions" valueField="id" textField="name"
+            [availableText]="'TITLE.AVAIL_ITEM' | translate" selectedText="已选项" [(ngModel)]="selectPermissions">
+          </ng2-dual-list-box>
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="onCancel()">{{'BUTTON.CANCEL' | translate}}</button>
+        <button type="button" class="btn btn-primary" [disabled]="!isValid"
+                (click)="onSubmit()">{{'BUTTON.SUBMIT' | translate}}</button>
+      </div>
+    </form>
+  </div>
+</clr-modal>

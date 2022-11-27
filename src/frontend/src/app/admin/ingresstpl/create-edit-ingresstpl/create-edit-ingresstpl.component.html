@@ -1,0 +1,32 @@
+<clr-modal [(clrModalOpen)]="modalOpened"  [clrModalSize]="'lg'" #modal>
+  <h3 class="modal-title">{{title}}
+    <wayne-modal-operate [modal]="modal" *ngIf="modalOpened"></wayne-modal-operate>
+  </h3>
+  <div class="modal-body">
+    <form #ngForm="ngForm" clrForm clrLayout="horizontal">
+      <clr-select-container>
+        <label class="required">Ingress</label>
+        <select id="ingress_id" clrSelect [(ngModel)]="ingressTpl.ingressId" [disabled]="actionType==1" name="ingress_id">
+          <option *ngFor="let ingress of ingresses" [ngValue]="ingress.id" [selected]="ingress.id === ingressTpl.ingressId">
+            {{ingress.name}}
+          </option>
+        </select>
+      </clr-select-container>
+      <div class="clr-form-control clr-row">
+        <label class="clr-control-label">{{'DEPLOYMENT_ADMIN.CREATE.METADATA' | translate}}</label>
+        <div class="clr-control-container clr-col-md-10 clr-col-12">
+          <wayne-ace-editor-box></wayne-ace-editor-box>
+        </div>
+      </div>
+      <clr-textarea-container>
+        <label>{{'TITLE.DESCRIPTION' | translate}}</label>
+        <textarea id="description" clrTextarea [(ngModel)]="ingressTpl.description" name="description" rows="3">
+                  </textarea>
+      </clr-textarea-container>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="onCancel()">取消</button>
+    <button type="button" class="btn btn-primary" [disabled]="!isValid" (click)="onSubmit()">提交</button>
+  </div>
+</clr-modal>

@@ -1,15 +1,47 @@
-# Binaries for programs and plugins
-*.exe
-*.exe~
-*.dll
-*.so
-*.dylib
+## OS files
+# Mac OS
+.DS_Store
 
-# Test binary, built with `go test -c`
-*.test
+## IDE specific files
+# IntelliJ
+.idea/
+*.iml
+## VSCode
+.vscode/
+# Vim temporary files
+*.swp
 
-# Output of the go coverage tool, specifically when used with LiteIDE
-*.out
+## Local copies of dependencies that should stay on developers' local machines
+node_modules/
+bower_components/
+*.tmp
 
-# Dependency directories (remove the comment below to include it)
-# vendor/
+## Build and test artifacts
+.go_workspace/
+.sass-cache/
+.tmp/
+coverage/
+dist/
+.tools/
+vendor/
+
+## Project
+.env
+src/backend/conf/dev.conf
+src/backend/conf/app.conf
+_dev/
+_build/
+_bus/
+src/backend/static
+src/backend/routers/commentsRouter__*
+src/backend/backend
+src/backend/lastupdate.tmp
+src/backend/views/index.html
+
+## Doc
+src/backend/swagger/swagger.json
+src/backend/swagger/swagger.yml
+
+## Script
+src/frontend/src/app/js-rename.js
+/src/backend/openapi.swagger.json

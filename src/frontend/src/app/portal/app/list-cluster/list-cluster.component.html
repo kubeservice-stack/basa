@@ -1,0 +1,18 @@
+<clr-modal [(clrModalOpen)]="modalOpened" clrModalSize="xl">
+  <h3 class="modal-title">{{'CLUSTER.RESOURCE_LIST' | translate}}</h3>
+  <div class="modal-body">
+    <clr-datagrid>
+      <clr-dg-column>{{'TITLE.CLUSTER' | translate}}</clr-dg-column>
+      <clr-dg-column>{{'CLUSTER.CPU_PERCENT' | translate}}</clr-dg-column>
+      <clr-dg-column>{{'CLUSTER.MEMORY_PERCENT' | translate}}</clr-dg-column>
+
+      <clr-dg-row *ngFor="let cluster of resources">
+        <clr-dg-cell>{{cluster.cluster}}</clr-dg-cell>
+        <clr-dg-cell>{{cluster.resource.usage.cpu}} / {{cluster.resource.limit.cpu}}</clr-dg-cell>
+        <clr-dg-cell>{{cluster.resource.usage.memory}} / {{cluster.resource.limit.memory}}</clr-dg-cell>
+      </clr-dg-row>
+      <clr-dg-footer [translate]="'PAGE.TOTAL'" [translateParams]="{value: resources.length}">
+      </clr-dg-footer>
+    </clr-datagrid>
+  </div>
+</clr-modal>

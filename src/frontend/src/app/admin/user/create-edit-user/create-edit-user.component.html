@@ -1,0 +1,39 @@
+<clr-modal [(clrModalOpen)]="createUserOpened" [clrModalSize]="'lg'">
+  <h3 class="modal-title">{{userTitle}}</h3>
+  <div class="modal-body">
+    <form #userForm="ngForm"  clrForm clrLayout="horizontal">
+      <clr-input-container>
+        <label class="required">{{'TITLE.NAME' | translate}}</label>
+        <input clrInput type="text" id="user_name" [(ngModel)]="user.name" name="user_name" size="36" required
+          pattern="[a-z]([-a-z0-9]*[a-z0-9])?" maxlength="24" (keyup)='handleNameValidation()'>
+          <clr-control-error>
+            用户名称不符合规范，验证规则[a-z]([-a-z0-9]*[a-z0-9])?
+          </clr-control-error>
+      </clr-input-container>
+        
+      <clr-input-container>
+        <label class="required">邮箱</label>
+        <input clrInput type="text" id="user_email" [(ngModel)]="user.email" name="user_email" size="36" required
+          pattern="^([A-Za-z0-9_\-\.\u4e00-\u9fa5])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,15})$" maxlength="128"
+          (keyup)='handleEmailValidation()'>
+          <clr-control-error>
+            用户邮箱不符合规范
+          </clr-control-error>
+      </clr-input-container>
+      
+      <clr-input-container>
+        <label class="required">展示</label>
+        <input clrInput type="text" id="user_display" [(ngModel)]="user.display" name="user_display" size="36" required maxlength="128" (keyup)='isDisplayValid = user.display.trim().length>0'>
+        <clr-control-error>
+          用户展示不符合规范
+        </clr-control-error>
+      </clr-input-container>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="onCancel()">{{'BUTTON.CANCEL' | translate}}</button>
+        <button type="button" class="btn btn-primary" [disabled]="!isValid"
+                (click)="onSubmit()">{{'BUTTON.SUBMIT' | translate}}</button>
+      </div>
+    </form>
+  </div>
+</clr-modal>

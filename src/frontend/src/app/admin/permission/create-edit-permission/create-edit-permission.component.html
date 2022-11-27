@@ -1,0 +1,24 @@
+<clr-modal [(clrModalOpen)]="createPermissionOpened" [clrModalSize]="'lg'">
+  <h3 class="modal-title">{{permissionTitle}}</h3>
+  <div class="modal-body">
+    <form #permissionForm="ngForm" clrForm clrLayout="horizontal">
+      <clr-input-container>
+        <label class="required">{{'TITLE.NAME' | translate}}</label>
+        <input type="text" clrInput id="permission_name" [(ngModel)]="permission.name" name="permission_name" size="60" required
+          pattern="[a-zA-Z]([_A-Za-z0-9]*[A-Za-z0-9])?" maxlength="200" (keyup)='handleValidation()'>
+          <clr-control-error>{{'RULE.REGEXT' | translate}}[a-z]([_a-z0-9]*[a-z0-9])?</clr-control-error>
+      </clr-input-container>
+      
+      <clr-textarea-container>
+        <label>{{'TITLE.DESCRIPTION' | translate}}</label>
+        <textarea type="text" clrTextarea id="permission_comment" [(ngModel)]="permission.comment" name="permission_comment"></textarea>
+      </clr-textarea-container>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="onCancel()">{{'BUTTON.CANCEL' | translate}}</button>
+        <button type="button" class="btn btn-primary" [disabled]="!isValid"
+                (click)="onSubmit()">{{'BUTTON.SUBMIT' | translate}}</button>
+      </div>
+    </form>
+  </div>
+</clr-modal>

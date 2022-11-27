@@ -1,0 +1,53 @@
+<clr-modal [(clrModalOpen)]="modalOpened">
+  <h3 class="modal-title">{{title}}</h3>
+
+  <div class="clr-col-lg-12 clr-col-md-12 clr-col-sm-12 clr-col-xs-12" class="modal-body">
+    <form #apiKeyForm="ngForm" clrForm clrLayout="horizontal">
+      <clr-input-container>
+        <label class="required">{{'TITLE.NAME' | translate}}</label>
+        <input clrInput [(ngModel)]="apiKey.name" type="text" name="name" required id="name"
+          [placeholder]="'PLACEHOLDER.NAME' | translate" size="45">
+      </clr-input-container>
+        
+      <clr-select-container>
+        <label class="required">类型</label>
+        <select clrSelect id="type" [(ngModel)]="apiKey.type" required name="type">
+          <option *ngFor="let type of apiKeyTypes" [selected]="type.id === 0" [ngValue]="type.id">{{type.name}}
+          </option>
+        </select>
+      </clr-select-container>
+      
+      <clr-input-container *ngIf="apiKey.type!=0">
+        <label class="required">资源ID</label>
+        <input clrInput [(ngModel)]="apiKey.resourceId" type="number" name="resourceId" required id="resourceId"
+          placeholder="例如：类型为命名空间时填写namespaceId" size="45">
+      </clr-input-container>
+      
+      <clr-select-container>
+        <label class="required">角色</label>
+        <select id="role" clrSelect [(ngModel)]="apiKey.group.id" required name="role">
+          <option *ngFor="let group of groups" [ngValue]="group.id">{{group.name}}
+          </option>
+        </select>
+      </clr-select-container>
+      
+      <clr-input-container>
+        <label class="required">过期时间</label>
+        <input clrInput [(ngModel)]="apiKey.expireIn" type="number" required name="expire_in" id="expire_in"
+          placeholder="单位秒，0代表永久有效" size="45">
+      </clr-input-container>
+      
+      <clr-textarea-container>
+        <label>{{'TITLE.DESCRIPTION' | translate}}</label>
+        <textarea clrTextarea type="text" [(ngModel)]="apiKey.description" name="description" id="description"
+          size="45"></textarea>
+      </clr-textarea-container>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-outline" (click)="onCancel()">{{'BUTTON.CANCEL' | translate}}</button>
+        <button type="button" class="btn btn-primary" [disabled]="!isValid"
+                (click)="onSubmit()">{{'BUTTON.SUBMIT' | translate}}</button>
+      </div>
+    </form>
+  </div>
+</clr-modal>

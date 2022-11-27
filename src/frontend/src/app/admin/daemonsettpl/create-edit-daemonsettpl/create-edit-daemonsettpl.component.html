@@ -1,0 +1,32 @@
+<clr-modal [(clrModalOpen)]="modalOpened" [clrModalSize]="'lg'" #modal>
+  <h3 class="modal-title">{{title}}
+    <wayne-modal-operate [modal]="modal" *ngIf="modalOpened"></wayne-modal-operate>
+  </h3>
+  <div class="modal-body">
+    <form #ngForm="ngForm" clrForm clrLayout="horizontal">
+      <clr-select-container>
+        <label class="required">{{'DAEMONSET_ADMIN.TPL.CREATE.CONFIGMAP' | translate}}</label>
+        <select id="daemonset_app_id" clrSelect [(ngModel)]="daemonsetTpl.daemonSetId" [disabled]="actionType==1" name="daemonset_app_id">
+          <option *ngFor="let daemonset of daemonsets" [ngValue]="daemonset.id"
+            [selected]="daemonset.id === daemonsetTpl.daemonSetId">{{daemonset.name}}
+          </option>
+        </select>
+      </clr-select-container>
+      <div class="clr-form-control clr-row">
+        <label for="deployment_metadata" class="clr-control-label">{{'DAEMONSET_ADMIN.TPL.CREATE.TEMPLATE' | translate}}</label>
+        <div class="clr-control-container clr-col-md-10 clr-col-12">
+          <wayne-ace-editor-box></wayne-ace-editor-box>
+        </div>
+      </div>
+      <clr-textarea-container>
+        <label>{{'TITLE.DESCRIPTION' | translate}}</label>
+        <textarea id="daemonset_description" clrTextarea [(ngModel)]="daemonsetTpl.description" name="daemonset_description" rows="3"> </textarea>
+      </clr-textarea-container>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="onCancel()">{{'BUTTON.CANCEL' | translate}}</button>
+    <button type="button" class="btn btn-primary" [disabled]="!isValid"
+            (click)="onSubmit()">{{'BUTTON.SUBMIT' | translate}}</button>
+  </div>
+</clr-modal>

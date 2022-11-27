@@ -1,0 +1,36 @@
+<clr-modal [(clrModalOpen)]="modalOpened" [clrModalSize]="'lg'">
+  <h3 class="modal-title">{{webHookTitle}}</h3>
+  <div class="modal-body">
+    <form #webHookForm="ngForm" clrForm clrLayout="horizontal">
+      <section class="form-block">
+        <clr-input-container>
+          <label class="required">{{'TITLE.NAME' | translate}}</label>
+          <input clrInput type="text" id="webhook-name" [(ngModel)]="webHook.name" name="webhook-name" required style="width: 90%;" maxlength="32" [placeholder]="'PLACEHOLDER.NAME' | translate">
+            <clr-control-error>{{ 'RULE.NAME' | translate }}</clr-control-error>
+        </clr-input-container>
+        <clr-input-container>
+          <label class="required">URL</label>
+          <input clrInput type="text" id="webhook-url" style="width: 90%;" [(ngModel)]="webHook.url" name="webhook-url" required [placeholder]="'PLACEHOLDER.URL_ADDR' | translate" pattern="(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]">
+            <clr-control-error>{{'RULE.URL' | translate}}</clr-control-error>
+        </clr-input-container>
+        <clr-input-container>
+          <label>{{ 'WEBHOOK.CIPHER' | translate }}</label>
+          <input clrInput type="text" id="webhook-secret" style="width: 90%;" [(ngModel)]="webHook.secret" name="webhook-secret" maxlength="120" [placeholder]="'PLACEHOLDER.CIPHER' | translate">
+        </clr-input-container>
+        <div class="clr-form-control clr-row">
+          <label class="clr-control-label required">{{ 'WEBHOOK.FOCUS_EVENT' | translate }}</label>
+          <div class="clr-control-container clr-col-md-10 clr-col-12">
+            <ng2-dual-list-box name="webhook-events" [data]="hookEvents" valueField="key" textField="name" [availableText]="'TITLE.AVAIL_ITEM' | translate"
+              [selectedText]="'TITLE.CHOOSED_ITEM' | translate" [(ngModel)]="watchEventKeys">
+            </ng2-dual-list-box>
+          </div>
+        </div>
+      </section>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="onCancel()">{{'BUTTON.CANCEL' | translate}}</button>
+    <button type="button" class="btn btn-primary" [disabled]="!isValid"
+            (click)="onSubmit()">{{'BUTTON.SUBMIT' | translate}}</button>
+  </div>
+</clr-modal>

@@ -1,0 +1,34 @@
+<clr-modal [(clrModalOpen)]="modalOpened">
+  <h3 class="modal-title">{{title}}</h3>
+  <div class="modal-body">
+    <form #ngForm="ngForm" clrForm clrLayout="horizontal">
+      <section class="form-block">
+        <div class="clr-form-control clr-row">
+          <label class="clr-control-label required">
+            {{'TITLE.NAME' | translate}}
+          </label>
+          <div class="clr-control-container clr-col-md-10 clr-col-12"
+            [class.clr-error]="name.invalid && (name.dirty || name.touched)">
+            <div class="clr-input-wrapper">
+              <span *ngIf="app && actionType==0 && nameGenerateRuleConfig=='join'">{{app.name}}-</span>
+              <input type="text" class="clr-input" id="name" [(ngModel)]="resource.name" name="name" required
+                 [readonly]="actionType==1" [placeholder]="'PLACEHOLDER.ENGLISH_NAME' | translate"
+                pattern="[a-z]([-a-z0-9]*[a-z0-9])?" maxlength="64" (keyup)='checkNameValid()' #name="ngModel">
+            </div>
+            <span *ngIf="name.invalid && (name.dirty || name.touched)"
+              class="clr-subtext">{{'RULE.REGEXT' | translate}}[a-z]([-a-z0-9]*[a-z0-9])?</span>
+          </div>
+        </div>
+        <clr-textarea-container>
+          <label>{{'TITLE.DESCRIPTION' | translate}}</label>
+          <textarea clrTextarea id="description" [(ngModel)]="resource.description" name="description" rows="3"></textarea>
+        </clr-textarea-container>
+      </section>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="onCancel()">{{'BUTTON.CANCEL' | translate}}</button>
+    <button type="button" class="btn btn-primary" [disabled]="!isValid"
+            (click)="onSubmit()">{{'BUTTON.SUBMIT' | translate}}</button>
+  </div>
+</clr-modal>

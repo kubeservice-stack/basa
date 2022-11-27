@@ -1,0 +1,63 @@
+<button (click)="openModal()" class="wayne-button primary"
+        *ngIf="authService.currentAppPermission.configmap.create || authService.currentUser.admin">
+  {{'CONFIGMAP.CREATE' | translate}}
+</button>
+<create-edit-configmap (create)="createConfigMap($event)"></create-edit-configmap>
+<div *ngIf="configMapId && configMaps?.length>0">
+  <wayne-tabs>
+    <wayne-tab (click)="tabClick(configMap.id)"
+               [id]="configMap.id"
+               *ngFor="let configMap of configMaps"
+               [active]="configMap.id==configMapId"
+               [description]="configMap.description"
+    >
+      {{configMap.name}}
+    </wayne-tab>
+  </wayne-tabs>
+  <div class="table-search">
+    <div class="table-search-left">
+      <button (click)="createConfigMapTpl()" class="wayne-button normal"
+              *ngIf="authService.currentAppPermission.configmap.create || authService.currentUser.admin">
+        {{'CONFIGMAP.CREATE_TMP' | translate}}
+      </button>
+      <button (click)="editConfigMap()" class="wayne-button normal"
+              *ngIf="authService.currentAppPermission.configmap.update || authService.currentUser.admin">
+        {{'CONFIGMAP.EDIT' | translate}}
+      </button>
+      <button (click)="publishHistory()" class="wayne-button normal"
+              *ngIf="authService.currentAppPermission.configmap.read || authService.currentUser.admin">
+        {{'BUTTON.HISTORY' | translate}}
+      </button>
+      <button (click)="deleteConfigMap()" class="wayne-button normal"
+              *ngIf="authService.currentAppPermission.configmap.delete || authService.currentUser.admin">
+        {{'CONFIGMAP.DELETE' | translate}}
+      </button>
+      <button class="wayne-button normal" (click)="diffTpl()">{{'BUTTON.COMPARE_TEMPLATES' | translate}}</button>
+      <wayne-filter-box (confirm)="confirmEvent()" (cancel)="cancelEvent()">
+        <wayne-checkbox-group [(ngModel)]="showList">
+          <wayne-checkbox value="create_time">{{'TITLE.CREATE_TIME' | translate}}</wayne-checkbox>
+          <wayne-checkbox value="config_cluster">{{'TITLE.CONFIG_CLUSTER' | translate}}</wayne-checkbox>
+          <wayne-checkbox value="online_cluster">{{'TITLE.ONLINE_CLUSTER' | translate}}</wayne-checkbox>
+          <wayne-checkbox value="release_explain">{{'TITLE.RELEASE_EXPLAIN' | translate}}</wayne-checkbox>
+          <wayne-checkbox value="create_user">{{'TITLE.CREATE_USER' | translate}}</wayne-checkbox>
+          <wayne-checkbox value="action">{{'TITLE.ACTION' | translate}}</wayne-checkbox>
+        </wayne-checkbox-group>
+      </wayne-filter-box>
+    </div>
+    <div class="table-search-right">
+      <div class="clr-toggle-wrapper">
+        <input type="checkbox" id="search-online" [(ngModel)]="isOnline" name="toggle-basic" class="clr-toggle" (change)="onlineChange()">
+        <label for="search-online">{{'MESSAGE.ONLY_ONLINE_TEMPLATE' | translate}}</label>
+      </div>
+    </div>
+  </div>
+  <list-configmap [configMaps]="configMaps"
+                  (cloneTpl)="cloneConfigMapTpl($event)"
+                  [configMapTpls]="configMapTpls"
+                  (edit)="editConfigMap()"
+                  (paginate)="retrieve($event)"
+                  [app]="app"
+                  [showState]="showState"
+                  [page]="pageState.page"></list-configmap>
+</div>
+

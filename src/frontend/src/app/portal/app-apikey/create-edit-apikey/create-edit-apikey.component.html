@@ -1,0 +1,45 @@
+<clr-modal [(clrModalOpen)]="modalOpened">
+  <h3 class="modal-title">{{title | translate}}APIKey</h3>
+
+  <div class="clr-col-lg-12 clr-col-md-12 clr-col-sm-12 clr-col-xs-12" class="modal-body">
+    <form #apiKeyForm="ngForm" clrForm clrLayout="horizontal">
+      <section class="form-block">
+        <clr-input-container>
+          <label for="name" class="required">{{'TITLE.NAME' | translate}}</label>
+          <input type="text" clrInput id="name" [(ngModel)]="apiKey.name" name="name" style="width: 50%" required  [placeholder]="'TITLE.NAME' | translate">
+          <clr-control-helper>
+          </clr-control-helper>
+          <clr-control-error>
+            {{'RULE.REQUIRED' | translate}}
+          </clr-control-error>
+        </clr-input-container>
+        <clr-select-container>
+          <label  class="required">{{'TITLE.ROLE' | translate}}</label>
+          <select clrSelect required [(ngModel)]="apiKey.group.id" name="role">
+            <option *ngFor="let group of groups" [ngValue]="group.id">{{group.name}}
+            </option>
+          </select>
+        </clr-select-container>
+        <clr-input-container>
+          <label class="required">{{'TITLE.EXPIRE_TIME' | translate}}</label>
+          <input type="number" clrInput [(ngModel)]="apiKey.expireIn" name="expire_in" style="width: 50%" required [placeholder]="'PLACEHOLDER.EXPIRE_TIME' | translate">
+          <clr-control-helper>
+          </clr-control-helper>
+          <clr-control-error>
+            {{'RULE.REQUIRED' | translate}}
+          </clr-control-error>
+        </clr-input-container>
+        <clr-textarea-container>
+          <label>{{'TITLE.DESCRIPTION' | translate}}</label>
+          <textarea clrTextarea id="description" size="45" [(ngModel)]="apiKey.description" name="description" rows="3"></textarea>
+        </clr-textarea-container>
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-outline" (click)="onCancel()">{{'BUTTON.CANCEL' | translate}}</button>
+          <button type="button" class="btn btn-primary" [disabled]="!isValid"
+                  (click)="onSubmit()">{{'BUTTON.CONFIRM' | translate}}</button>
+        </div>
+      </section>
+    </form>
+  </div>
+</clr-modal>

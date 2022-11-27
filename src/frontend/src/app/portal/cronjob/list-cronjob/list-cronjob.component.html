@@ -1,0 +1,112 @@
+<clr-datagrid (clrDgRefresh)="refresh($event)" [(clrDgSelected)]="selected" class="wayne-clr-datagrid">
+  <clr-dg-placeholder>{{'MESSAGE.NO_MESSAGE' | translate}}</clr-dg-placeholder>
+  <clr-dg-column class="col-id">
+    <ng-container>
+      #
+    </ng-container>
+  </clr-dg-column>
+  <clr-dg-column class="col-time">
+    <ng-container *clrDgHideableColumn="showState['create_time']">
+      {{'TITLE.CREATE_TIME' | translate}}
+    </ng-container>
+  </clr-dg-column>
+  <clr-dg-column class="col-version">
+    <ng-container *clrDgHideableColumn="showState['version']">
+      {{'TITLE.VERSION' | translate}}
+    </ng-container>
+  </clr-dg-column>
+  <clr-dg-column class="col-cluster">
+    <ng-container *clrDgHideableColumn="showState['online_cluster']">
+      <!-- {{'TITLE.ONLINE_CLUSTER' | translate}} -->
+    </ng-container>
+  </clr-dg-column>
+  <clr-dg-column>
+    <ng-container *clrDgHideableColumn="showState['scheduling_interval']">
+      {{'TITLE.SCHEDULING_INTERVAL' | translate}}
+    </ng-container>
+  </clr-dg-column>
+  <clr-dg-column class="col-description">
+    <ng-container *clrDgHideableColumn="showState['release_explain']">
+      {{'TITLE.RELEASE_EXPLAIN' | translate}}
+    </ng-container>
+  </clr-dg-column>
+  <clr-dg-column>
+    <ng-container *clrDgHideableColumn="showState['create_user']">
+      {{'TITLE.CREATE_USER' | translate}}
+    </ng-container>
+  </clr-dg-column>
+  <clr-dg-column class="col-operate">
+    <ng-container *clrDgHideableColumn="showState['action']">
+      {{'TITLE.ACTION' | translate}}
+    </ng-container>
+  </clr-dg-column>
+  <clr-dg-row *ngFor="let cronjobTpl of cronjobTpls" [clrDgItem]="cronjobTpl">
+    <clr-dg-cell class="col-id">{{cronjobTpl.id}}</clr-dg-cell>
+    <clr-dg-cell class="col-time">{{cronjobTpl.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</clr-dg-cell>
+    <clr-dg-cell class="col-version">
+      <div *ngFor="let version of cronjobTpl.containerVersions" class="version-text">
+        <a href="javascript:;" (click)="versionDetail(version)">{{version}}</a>
+      </div>
+    </clr-dg-cell>
+    <clr-dg-cell class="col-cluster">
+      <div class="form-group" style="padding-bottom: 2px" *ngFor="let status of cronjobTpl.status">
+        <a href="javascript:void(0)" (click)="openJobModal(status,cronjobTpl)" class="label clickable"
+           [class.clickable]="status.state!=2"
+           [class.label-success]="status.state==0"
+           [class.label-warning]="status.state==1">
+          {{status.cluster}}({{getActiveJobs(status.kubeObj)}})
+        </a>
+      </div>
+    </clr-dg-cell>
+    <clr-dg-cell>
+      <div class="text-overflow">
+        {{cronjobTpl.schedule}}
+      </div>
+    </clr-dg-cell>
+    <clr-dg-cell class="col-description">
+      <div class="text-overflow">
+        <a href="javascript:void(0)" (click)="tplDetail(cronjobTpl)">{{cronjobTpl.description}}</a>
+      </div>
+    </clr-dg-cell>
+    <clr-dg-cell>{{cronjobTpl.user}}</clr-dg-cell>
+    <clr-dg-cell class="col-operate">
+      <button class="wayne-button text"
+              (click)="publishTpl(cronjobTpl)"
+              *ngIf="authService.currentAppPermission.kubeCronJob.create || authService.currentUser.admin">
+        {{'BUTTON.RELEASE' | translate}}</button>
+      <button class="wayne-button text"
+              (click)="cronjobTplDetail(cronjobTpl)"
+              *ngIf="authService.currentAppPermission.cronjob.read || authService.currentUser.admin">
+        {{'BUTTON.DETAIL' | translate}}</button>
+      <button class="wayne-button text"
+              (click)="cloneCronjobTpl(cronjobTpl)"
+              *ngIf="authService.currentAppPermission.cronjob.create || authService.currentUser.admin">
+        {{'BUTTON.CLONE' | translate}}</button>
+      <button class="wayne-button text"
+              *ngIf="!cronjobTpl.status && (authService.currentAppPermission.cronjob.delete || authService.currentUser.admin)"
+              (click)="deleteCronjobTpl(cronjobTpl)">
+        {{'BUTTON.DELETE' | translate}}</button>
+      <button class="wayne-button text"
+              (click)="offlineCronjobTpl(cronjobTpl)"
+              *ngIf="cronjobTpl.status && (authService.currentAppPermission.kubeCronJob.delete || authService.currentUser.admin)">
+        {{'BUTTON.DROP' | translate}}</button>
+      <button class="wayne-button text"
+              (click)="suspend(cronjobTpl)"
+              *ngIf="cronjobTpl.status && (authService.currentAppPermission.kubeCronJob.create || authService.currentUser.admin)">
+        {{'BUTTON.LANG_UP' | translate}}</button>
+    </clr-dg-cell>
+  </clr-dg-row>
+
+  <clr-dg-footer>
+    <wayne-paginate
+      [(currentPage)]="currentPage"
+      [total]="page.totalCount"
+      [pageSizes]="[10, 20, 50]"
+      (sizeChange)="pageSizeChange($event)">
+    </wayne-paginate>
+  </clr-dg-footer>
+</clr-datagrid>
+<list-job></list-job>
+<wayne-ace-editor></wayne-ace-editor>
+<publish-tpl (published)="published($event)"></publish-tpl>
+

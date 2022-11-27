@@ -1,0 +1,37 @@
+matrix:
+
+  include:
+
+    - language: go
+      os:
+        - linux
+      go:
+        - 1.12.x
+      env:
+        - DB_USER=root DB_PASSWD='root'  DB_TNS='tcp(127.0.0.1:3306)'
+      service:
+        - mysql
+      before_install:
+        - mysql -e 'select VERSION();'
+        - mysql -e 'create database wayne;'
+        - mysql -u root -e "create user wayne@localhost identified by 'wayne'; grant all on wayne.* to wayne@localhost;"
+        - mysql -u wayne -p'wayne' -e 'show databases;'
+      script:
+        - pwd
+        - export GO111MODULE=on
+        - export GOPROXY=https://goproxy.io
+        - make syncdb
+        - make run-backend &
+        - sleep 5
+        - pidof go
+
+    - language: node_js
+      os:
+        - linux
+      node_js:
+        - 12.16.1
+      before_install:
+        - cd src/frontend && npm install
+      script:
+        - npm run build
+        - npm run lint

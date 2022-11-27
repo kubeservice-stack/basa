@@ -1,0 +1,35 @@
+<div class="clr-row">
+  <div class="clr-col-lg-12 clr-col-md-12 clr-col-sm-12 clr-col-xs-12">
+    <div class="clr-row flex-items-xs-between flex-items-xs-top" style="padding-left: 15px; padding-right: 15px;">
+      <h2 class="header-title">APIKey {{'TITLE.LIST' | translate}}</h2>
+    </div>
+    <div class="table-search">
+      <div class="table-search-left">
+        <button *ngIf="authService.currentAppPermission.apiKey.create || authService.currentUser.admin"
+                class="wayne-button normal"
+                (click)="openModal()">
+          {{'ACTION.CREATE' | translate}} APIKey
+        </button>
+        <wayne-filter-box (confirm)="confirmEvent()" (cancel)="cancelEvent()">
+          <wayne-checkbox-group [(ngModel)]="showList">
+            <wayne-checkbox value="name">{{'TITLE.NAME' | translate}}</wayne-checkbox>
+            <wayne-checkbox value="role">{{'TITLE.ROLE' | translate}}</wayne-checkbox>
+            <wayne-checkbox value="create_time">{{'TITLE.CREATE_TIME' | translate}}</wayne-checkbox>
+            <wayne-checkbox value="expire_time">{{'TITLE.EXPIRE_TIME' | translate}}</wayne-checkbox>
+            <wayne-checkbox value="create_user">{{'TITLE.CREATE_USER' | translate}}</wayne-checkbox>
+            <wayne-checkbox value="description">{{'TITLE.DESCRIPTION' | translate}}</wayne-checkbox>
+            <wayne-checkbox value="action">{{'TITLE.ACTION' | translate}}</wayne-checkbox>
+          </wayne-checkbox-group>
+        </wayne-filter-box>
+      </div>
+    </div>
+    <create-edit-apikey (create)="createApiKey($event)"></create-edit-apikey>
+    <list-apikey [apiKeys]="changedApiKeys"
+                 (delete)="deleteApiKey($event)"
+                 (edit)="editApiKey($event)"
+                 (paginate)="retrieve($event)"
+                 [page]="pageState.page"
+                 [showState]="showState"
+    ></list-apikey>
+  </div>
+</div>

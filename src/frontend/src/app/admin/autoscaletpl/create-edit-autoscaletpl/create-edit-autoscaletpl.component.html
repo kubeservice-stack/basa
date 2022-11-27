@@ -1,0 +1,32 @@
+<clr-modal [(clrModalOpen)]="modalOpened"  [clrModalSize]="'lg'" #modal>
+  <h3 class="modal-title">{{title}}
+    <wayne-modal-operate [modal]="modal" *ngIf="modalOpened"></wayne-modal-operate>
+  </h3>
+  <div class="modal-body">
+    <form #ngForm="ngForm" clrForm clrLayout="horizontal">
+      <clr-select-container>
+        <label class="required">HPA</label>
+        <select id="hpa_id" clrSelect [(ngModel)]="template.hpaId" [disabled]="actionType==1" name="hpa_id">
+          <option *ngFor="let resource of resources" [ngValue]="resource.id" [selected]="resource.id === template.hpaId">
+            {{resource.name}}
+          </option>
+        </select>
+      </clr-select-container>
+      <div class="clr-form-control clr-row">
+        <label class="clr-control-label">{{'TITLE.TEMPLATE' | translate}}</label>
+        <div class="clr-control-container clr-col-md-10 clr-col-12">
+          <wayne-ace-editor-box></wayne-ace-editor-box>
+        </div>
+      </div>
+      <clr-textarea-container>
+        <label>{{'TITLE.DESCRIPTION' | translate}}</label>
+        <textarea id="description" clrTextarea [(ngModel)]="template.description" name="description" rows="3">
+                  </textarea>
+      </clr-textarea-container>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="onCancel()">{{'BUTTON.CANCEL' | translate}}</button>
+    <button type="button" class="btn btn-primary" [disabled]="!isValid" (click)="onSubmit()">{{'BUTTON.SUBMIT' | translate}}</button>
+  </div>
+</clr-modal>

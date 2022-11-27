@@ -1,0 +1,58 @@
+<button (click)="createDeployment()" class="wayne-button primary"
+        *ngIf="authService.currentAppPermission.deployment.create || authService.currentUser.admin">
+  {{'DEPLOYMENT.CREATE' | translate}}
+</button>
+<create-edit-deployment (create)="create($event)"></create-edit-deployment>
+<div *ngIf="deploymentId && deployments?.length>0">
+  <wayne-tabs>
+    <wayne-tab (click)="tabClick(deployment.id)"
+               [id]="deployment.id"
+               *ngFor="let deployment of deployments"
+               [active]="deployment.id==deploymentId"
+               [description]="deployment.description"
+    >
+      {{deployment.name}}
+    </wayne-tab>
+  </wayne-tabs>
+  <div class="table-search">
+    <div class="table-search-left">
+      <button class="wayne-button normal" (click)="createDeploymentTpl()"
+              *ngIf="authService.currentAppPermission.deployment.create || authService.currentUser.admin">
+        {{'DEPLOYMENT.CREATE_TMP' | translate}}
+      </button>
+      <button class="wayne-button normal" (click)="editDeployment()"
+              *ngIf="authService.currentAppPermission.deployment.update || authService.currentUser.admin">
+        {{'DEPLOYMENT.EDIT' | translate}}
+      </button>
+      <button class="wayne-button normal" (click)="publishHistory()"
+              *ngIf="authService.currentAppPermission.deployment.read || authService.currentUser.admin">
+        {{'BUTTON.HISTORY' | translate}}
+      </button>
+      <button class="wayne-button normal" (click)="deleteDeployment()"
+              *ngIf="authService.currentAppPermission.deployment.delete || authService.currentUser.admin">
+        {{'DEPLOYMENT.DELETE' | translate}}
+      </button>
+      <button class="wayne-button normal" (click)="diffTpl()">{{'BUTTON.COMPARE_TEMPLATES' | translate}}</button>
+      <wayne-filter-box (confirm)="confirmEvent()" (cancel)="cancelEvent()">
+        <wayne-checkbox-group [(ngModel)]="showList">
+          <wayne-checkbox value="create_time">{{'TITLE.CREATE_TIME' | translate}}</wayne-checkbox>
+          <wayne-checkbox value="version">{{'TITLE.VERSION' | translate}}</wayne-checkbox>
+          <wayne-checkbox value="online_cluster">{{'TITLE.ONLINE_CLUSTER' | translate}}</wayne-checkbox>
+          <wayne-checkbox value="release_explain">{{'TITLE.RELEASE_EXPLAIN' | translate}}</wayne-checkbox>
+          <wayne-checkbox value="create_user">{{'TITLE.CREATE_USER' | translate}}</wayne-checkbox>
+          <wayne-checkbox value="action">{{'TITLE.ACTION' | translate}}</wayne-checkbox>
+        </wayne-checkbox-group>
+      </wayne-filter-box>
+    </div>
+    <div class="table-search-right">
+      <div class="clr-toggle-wrapper">
+        <input type="checkbox" id="search-online" [(ngModel)]="isOnline" name="toggle-basic" class="clr-toggle"  (change)="onlineChange()">
+        <label for="search-online">{{'MESSAGE.ONLY_ONLINE_TEMPLATE' | translate}}</label>
+      </div>
+    </div>
+  </div>
+  <list-deployment [deploymentTpls]="changedDeploymentTpls" (paginate)="retrieve($event)"
+                   (edit)="editDeployment()" (createTpl)="createDeploymentTpl()" [showState]="showState"
+                   (cloneTpl)="cloneDeploymentTpl($event)" [appId]="appId" [page]="pageState.page">
+  </list-deployment>
+</div>

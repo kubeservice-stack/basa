@@ -1,0 +1,78 @@
+<clr-modal [(clrModalOpen)]="modalOpened" [clrModalSize]="'lg'" #modal>
+  <h3 class="modal-title">{{title}}
+    <wayne-modal-operate [modal]="modal" *ngIf="modalOpened"></wayne-modal-operate>
+  </h3>
+  <div class="modal-body">
+    <form #ngForm="ngForm" clrForm clrLayout="horizontal">
+      <section class="form-block">
+        <clr-input-container>
+          <label class="required">{{'TITLE.NAME' | translate}}</label>
+          <input type="text" clrInput id="name" [(ngModel)]="cluster.name" name="name" size="24" required [readonly]="actionType==1"
+            maxlength="24" (keyup)='handleValidation()'>
+            <clr-control-helper>
+              <span style="color: red;" *ngIf="!isNameValid">
+                {{'ERROR.CLUSTER_NAME' | translate}}
+              </span>
+            </clr-control-helper>
+            <clr-control-error>{{'ERROR.CLUSTER_NAME' | translate}}</clr-control-error>
+        </clr-input-container>
+        <clr-input-container>
+          <label class="required">displayname</label>
+          <input type="text" clrInput id="name" [(ngModel)]="cluster.displayname" name="displayname" size="24" required maxlength="24">
+            <clr-control-error>{{'ERROR.CLUSTER_NAME' | translate}}</clr-control-error>
+        </clr-input-container>
+        <clr-input-container>
+          <label class="required">Master</label>
+          <input type="text" clrInput id="master" [(ngModel)]="cluster.master" name="master" required
+            maxlength="128">
+        </clr-input-container>
+        <div class="clr-form-control clr-row">
+          <label class="clr-control-label required">KubeConfig</label>
+          <div class="clr-control-container clr-col-md-10 clr-col-12">
+            <wayne-ace-editor-box #kubeConfig></wayne-ace-editor-box>
+          </div>
+        </div>
+        <clr-select-container>
+          <label>集群状态</label>
+          <select clrSelect id="concurrencyPolicy" name="status" [(ngModel)]="cluster.status">
+            <option [ngValue]="0" selected>在线</option>
+            <option [ngValue]="1">维护中</option>
+          </select>
+        </clr-select-container>
+        <div class="clr-form-control clr-row">
+          <label class="clr-control-label">
+            MetaData
+            <clr-signpost>
+              <clr-signpost-content [clrPosition]="position" style="min-width:25rem" *clrIfOpen>
+                <h3 style="margin-top: 0">配置说明</h3>
+                <code>
+                  示例：
+                  <pre style="border: none">{{clusterMeataObjExample}}</pre>
+                  <ul>
+                    <li>rbd : Kubernetes PV rbd 对象，配置之后新建PV类型为rbd会自动填充</li>
+                    <li>cephfs : Kubernetes PV cephfs 对象，配置之后新建PV类型为cephfs会自动填充</li>
+                    <li>env : 当前集群发布服务时会自动添加配置的env，如果跟用户配置的重名，会默认使用系统配置的Env，可以配置IDC等环境变量</li>
+                  </ul>
+                </code>
+              </clr-signpost-content>
+            </clr-signpost>
+          </label>
+          <div class="clr-control-container clr-col-md-10 clr-col-12">
+            <wayne-ace-editor-box #metaData></wayne-ace-editor-box>
+          </div>
+        </div>
+        <clr-textarea-container>
+          <label>{{'TITLE.DESCRIPTION' | translate}}</label>
+          <textarea id="description" clrTextarea [(ngModel)]="cluster.description" name="description" rows="3">
+                    </textarea>
+        </clr-textarea-container>
+      </section>
+    </form>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline" (click)="onCancel()">{{'BUTTON.CANCEL' | translate}}</button>
+      <button type="button" class="btn btn-primary" [disabled]="!isValid"
+              (click)="onSubmit()">{{'BUTTON.SUBMIT' | translate}}</button>
+    </div>
+  </div>
+
+</clr-modal>

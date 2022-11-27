@@ -1,0 +1,35 @@
+<clr-modal [(clrModalOpen)]="modalOpened" [clrModalSize]="'lg'" #modal>
+  <h3 class="modal-title">{{title}}
+    <wayne-modal-operate [modal]="modal" *ngIf="modalOpened"></wayne-modal-operate>
+  </h3>
+  <div class="modal-body">
+    <form #ngForm="ngForm" clrForm clrLayout="horizontal">
+      <clr-select-container>
+        <label for="" class="required">状态副本集</label>
+        <select id="statefulset_app_id" clrSelect [(ngModel)]="statefulsetTpl.statefulsetId" [disabled]="actionType==1"
+          name="statefulset_app_id">
+          <option *ngFor="let statefulset of statefulsets" [ngValue]="statefulset.id"
+            [selected]="statefulset.id === statefulsetTpl.statefulsetId">{{statefulset.name}}
+          </option>
+        </select>
+      </clr-select-container>
+     
+      <div class="clr-form-control clr-row">
+        <label for="deployment_metadata" class="clr-control-label">{{'STATEFULSET_ADMIN.CREATE.METADATE' | translate}}</label>
+        <div class="clr-control-container clr-col-md-10 clr-col-12">
+          <wayne-ace-editor-box></wayne-ace-editor-box>
+        </div>
+      </div>
+      <clr-textarea-container>
+        <label>{{'TITLE.DESCRIPTION' | translate}}</label>
+        <textarea id="statefulset_description" clrTextarea [(ngModel)]="statefulsetTpl.description" name="statefulset_description" rows="3"></textarea>
+      </clr-textarea-container>
+    
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="onCancel()">{{'BUTTON.CANCEL' | translate}}</button>
+    <button type="button" class="btn btn-primary" [disabled]="!isValid"
+            (click)="onSubmit()">{{'BUTTON.SUBMIT' | translate}}</button>
+  </div>
+</clr-modal>

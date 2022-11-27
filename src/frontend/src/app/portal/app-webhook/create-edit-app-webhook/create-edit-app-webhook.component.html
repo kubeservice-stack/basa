@@ -1,0 +1,51 @@
+<clr-modal [(clrModalOpen)]="modalOpened" [clrModalSize]="'lg'">
+  <h3 class="modal-title">{{webHookTitle}}</h3>
+  <div class="modal-body">
+    <form #webHookForm="ngForm" clrForm clrLayout="horizontal">
+      <section class="form-block">
+        <clr-input-container>
+          <label for="name" class="required">{{'TITLE.NAME' | translate}}</label>
+          <input type="text" clrInput id="name" [(ngModel)]="webHook.name" name="name" style="width: 15rem" required size="32"  maxlength="32" [placeholder]="'PLACEHOLDER.NAME' | translate" >
+          <clr-control-helper>
+          </clr-control-helper>
+          <clr-control-error>
+            {{ 'RULE.NAME' | translate }}
+          </clr-control-error>
+        </clr-input-container>
+        <clr-input-container>
+          <label for="webhook-url" class="required">{{'WEBHOOK.ADDRESS' | translate}}</label>
+          <input clrInput type="text" id="webhook-url" [(ngModel)]="webHook.url" name="webhook-url"  style="width: 15rem" required
+              [placeholder]="'PLACEHOLDER.DELIVERY_ADDR' | translate" pattern="(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]">
+          <clr-control-helper>
+          </clr-control-helper>
+          <clr-control-error>
+            {{ 'RULE.NAME' | translate }}
+          </clr-control-error>
+        </clr-input-container>
+        <clr-input-container>
+          <label for="webhook-url">{{'WEBHOOK.CIPHER' | translate}}</label>
+          <input clrInput type="text" id="webhook-secret" [(ngModel)]="webHook.secret" name="webhook-secret"
+            style="width: 15rem" maxlength="120" [placeholder]="'PLACEHOLDER.CIPHER' | translate">
+          <clr-control-helper>
+          </clr-control-helper>
+          <clr-control-error>
+            {{ 'RULE.NAME' | translate }}
+          </clr-control-error>
+        </clr-input-container>
+        <div class="clr-form-control clr-row">
+          <label class="clr-control-label required">{{ 'WEBHOOK.FOCUS_EVENT' | translate }}</label>
+          <div class="clr-control-container" style="flex: 1;">
+            <ng2-dual-list-box name="webhook-events" [data]="hookEvents" valueField="key" textField="name" [availableText]="'TITLE.AVAIL_ITEM' | translate"
+              [selectedText]="'TITLE.CHOOSED_ITEM' | translate" [(ngModel)]="watchEventKeys">
+            </ng2-dual-list-box>
+          </div>
+        </div>
+      </section>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="onCancel()">{{'BUTTON.CANCEL' | translate}}</button>
+    <button type="button" class="btn btn-primary" [disabled]="!isValid"
+            (click)="onSubmit()">{{'BUTTON.SUBMIT' | translate}}</button>
+  </div>
+</clr-modal>
