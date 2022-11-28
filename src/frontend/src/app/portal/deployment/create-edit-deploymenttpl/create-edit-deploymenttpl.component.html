@@ -86,10 +86,7 @@
           <input type="number" clrInput style="width:inherit" name="container.resources.limits.memory_{{i}}" required
             [(ngModel)]="container.resources.limits.memory" size="60" [placeholder]="'UNIT.MEMORY' | translate">
           <clr-control-helper>
-            <ng-container *ngIf="!!checkMemory(container.resources.limits.memory)">
-              price: {{container.resources.limits.memory * memoryUnitPrice | number:'1.2-2'}}{{'UNIT.PRICE' |
-              translate}}
-            </ng-container>
+            <ng-container *ngIf="!!checkMemory(container.resources.limits.memory)"></ng-container>
             <span class="clr-error clr-subtext" [translate]="'RULE.MEMORY'" [translateParams]="{value: memoryLimit}"
               *ngIf="!checkMemory(container.resources.limits.memory)"></span>
           </clr-control-helper>
@@ -103,14 +100,14 @@
             style="width:inherit" required [placeholder]="'UNIT.CPU' | translate">
           <clr-control-helper>
             <span *ngIf="!!checkCpu(container.resources.limits.cpu)">
-              price: {{container.resources.limits.cpu * cpuUnitPrice | number:'1.2-2'}}{{'UNIT.PRICE' | translate}}
+
             </span>
-            <span *ngIf="!checkCpu(container.resources.limits.cpu)" [translate]="'RULE.CPU'" translateParams="{value: cpuLimit}"
+            <span *ngIf="!checkCpu(container.resources.limits.cpu)" [translate]="'RULE.CPU'" [translateParams]="{value: cpuLimit}"
               class="tooltip-content">
             </span>
           </clr-control-helper>
           <clr-control-error>
-            <span [translate]="'RULE.CPU'" translateParams="{value: cpuLimit}" class="tooltip-content">
+            <span [translate]="'RULE.CPU'" [translateParams]="{value: cpuLimit}" class="tooltip-content">
             </span>
           </clr-control-error>
         </clr-input-container>
