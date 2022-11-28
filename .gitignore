@@ -29,7 +29,6 @@ vendor/
 .env
 src/backend/conf/dev.conf
 src/backend/conf/app.conf
-_dev/
 _build/
 _bus/
 src/backend/static

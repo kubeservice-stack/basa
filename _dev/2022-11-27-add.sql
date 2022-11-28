@@ -1,0 +1,1 @@
+alter table `app` add `typed` integer NOT NULL DEFAULT 0  COMMENT 'typed';
