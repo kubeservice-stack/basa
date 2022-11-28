@@ -46,7 +46,7 @@ jobs:
       name: Build and push frontend
       uses: docker/build-push-action@v3
       with:
-        file: ./hack/build/backend/Dockerfile
+        file: ./hack/build/frontend/Dockerfile
         platforms: linux/amd64
         push: true
         tags: |
