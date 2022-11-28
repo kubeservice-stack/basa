@@ -1,4 +1,4 @@
-version: '1'
+version: '3'
 
 services:
 
@@ -33,7 +33,7 @@ services:
     volumes:
     - ./conf/config.js:/usr/local/openresty/nginx/html/config.js
     depends_on:
-    - base-backend
+    - basa-backend
     restart: always
     networks:
     - default

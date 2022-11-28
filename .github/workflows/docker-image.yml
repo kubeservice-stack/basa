@@ -1,0 +1,56 @@
+name: basa
+
+on:
+  push:
+    branches: [ "main" ]
+    tags:
+      - v*
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    -
+      name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+    -
+      name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+      
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=today::$(date +'%Y-%m-%d')"
+    -
+      name: Build and push backend
+      uses: docker/build-push-action@v3
+      with:
+        file: ./hack/build/backend/Dockerfile
+        platforms: linux/amd64
+        push: true
+        tags: |
+          dongjiang1989/basa-backend:latest
+          dongjiang1989/basa-backend:${{ steps.date.outputs.today }} 
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+    -
+      name: Build and push frontend
+      uses: docker/build-push-action@v3
+      with:
+        file: ./hack/build/frontend/Dockerfile
+        platforms: linux/amd64
+        push: true
+        tags: |
+          dongjiang1989/basa-frontend:latest
+          dongjiang1989/basa-frontend:${{ steps.date.outputs.today }} 
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
