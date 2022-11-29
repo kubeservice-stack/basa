@@ -13,3 +13,7 @@ export class Autoscale {
   app: App;
   order: number;
 }
+
+export const HPAAutoscaleNames = [
+  "cpu", "memory"
+];
