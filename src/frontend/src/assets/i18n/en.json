@@ -140,7 +140,10 @@
     "ENVIRONMENT_VAR": "Environment Variable",
     "READINESS_PROBE": "Readiness Probe",
     "LIVENESS_PROBE_CHECK": "Liveness Probe",
-    "LIFE_CYCLE": "Life Cycle"
+    "LIFE_CYCLE": "Life Cycle",
+    "SCHEDULING_METRIC": "Scheduling Metric",
+    "ADD_SCHEDULING_METRIC": "Add Scheduling Metric",
+    "DELETE_SCHEDULING_METRIC": "Delete This Scheduling Metric"
   },
   "TITLE": {
     "ACTION": "Action",
@@ -151,6 +154,10 @@
     "CREATE_APP": "Create App",
     "CREATE_TIME": "Create Time",
     "CREATE_USER": "Create User",
+    "TYPED": "App Type",
+    "CONTAINERD": "Container",
+    "FAAS": "Serverless",
+    "HELPER": "if serverless project, select 'Serverless'",
     "DEPARTMENT_NAME": "Department Name",
     "DEPLOY_FREQ": "Deployment Release Frequence",
     "DESCRIPTION": "Description",
@@ -164,6 +171,20 @@
     "ROLE": "Role",
     "SHOW_COLUMN": "Show Column",
     "STATUS": "Status"
+  },
+  "SERVERLESS": {
+	"REPLICAS": "Replicas",
+    "INCOCATIONCOUNT": "Invocation Count",
+    "URL": "URL",
+	"TITLE": "Invoke function",
+	"INVOKE": "INVOKE",
+	"TEXT":  "Text",
+	"JSON": "Json",
+	"DOWNLOAD": "Download",
+	"REUESTBODY": "Request Body",
+	"RESPONSESTATUS": "Response status",
+	"ROUNDTRIP": "Round-trip (s)",
+	"RESPONSEBODY": "Response body"
   },
   "USER": {}
 }

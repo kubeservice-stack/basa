@@ -486,6 +486,10 @@
     "DEPARTMENT_NAME": "部门名称",
     "DEPLOY_FREQ": "部署上线频数",
     "DESCRIPTION": "描述",
+    "TYPED": "项目类型",
+    "CONTAINERD": "容器",
+    "FAAS": "Serverless",
+    "HELPER": "如果是Serverless项目，请选择‘Serverless’类型",
     "EXPIRE_TIME": "过期时间",
     "EXPLAIN": "说明",
     "FINISH_TIME": "结束时间",
@@ -585,7 +589,10 @@
     "NAME": "名称",
     "MIN_REPLICAS": "最小副本数",
     "MAX_REPLICAS": "最大副本数",
-    "CPU_THRESHOLD": "CPU 负载阈值"
+    "CPU_THRESHOLD": "CPU 负载阈值",
+    "SCHEDULING_METRIC": "调度维度",
+    "ADD_SCHEDULING_METRIC": "添加调度维度",
+    "DELETE_SCHEDULING_METRIC": "删除此调度维度"
   },
   "UNIT": {
     "CORE": "核",
@@ -594,6 +601,20 @@
     "PIECE": "份",
     "PRICE": "元/月",
     "SECOND": "秒"
+  },
+  "SERVERLESS": {
+    "REPLICAS": "服务副本数",
+    "INCOCATIONCOUNT": "调用次数",
+    "URL": "调用地址",
+    "TITLE": "调用函数",
+    "INVOKE": "调用",
+    "TEXT":  "Text",
+    "JSON": "Json",
+    "DOWNLOAD": "Download",
+    "REUESTBODY": "请求body体",
+    "RESPONSESTATUS": "响应状态",
+    "ROUNDTRIP": "耗时 (s)",
+    "RESPONSEBODY": "响应body体"
   },
   "USER": {
     "APP_NAME": "项目名称",
