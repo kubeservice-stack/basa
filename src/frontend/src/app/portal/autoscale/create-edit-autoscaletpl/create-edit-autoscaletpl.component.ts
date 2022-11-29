@@ -7,6 +7,7 @@ import { AuthService } from '../../../shared/auth/auth.service';
 import { defaultAutoscale } from '../../../shared/default-models/autoscale.const';
 import { DOCUMENT, Location } from '@angular/common';
 import { ActionType } from '../../../shared/shared.const';
+import { AceEditorMsg } from '../../../shared/ace-editor/ace-editor';
 import { combineLatest } from 'rxjs';
 import { EventManager } from '@angular/platform-browser';
 import { MessageHandlerService } from '../../../shared/message-handler/message-handler.service';
@@ -14,6 +15,7 @@ import { AceEditorService } from '../../../shared/ace-editor/ace-editor.service'
 import { AutoscaleTplService } from '../../../shared/client/v1/autoscaletpl.service';
 import { AutoscaleService } from '../../../shared/client/v1/autoscale.service';
 import { AutoscaleTpl } from '../../../shared/model/v1/autoscaletpl';
+import { HPAAutoscaleNames } from '../../../shared/model/v1/autoscale';
 import { DeploymentService } from '../../../shared/client/v1/deployment.service';
 import { Deployment } from '../../../shared/model/v1/deployment';
 
@@ -87,6 +89,12 @@ export class CreateEditAutoscaletplComponent extends CreateEditResourceTemplate 
           this.template = tpl.data;
           this.template.description = null;
           this.saveResourceTemplate(JSON.parse(this.template.template));
+
+          if (this.kubeResource.apiVersion === "autoscaling/v1") {
+            this.kubeResource.apiVersion = "autoscaling/v2beta1";
+            this.kubeResource.spec.metrics[0].resource.targetAverageUtilization = this.kubeResource.spec.targetCPUUtilizationPercentage;
+            delete this.kubeResource.spec.targetCPUUtilizationPercentage;
+          }
         }
       },
       error => {
@@ -125,6 +133,48 @@ export class CreateEditAutoscaletplComponent extends CreateEditResourceTemplate 
     }
   }
 
+  onAddMetric(event: Event) {
+    event.stopPropagation();
+
+    let tempName: string = "";
+
+    for (let name of HPAAutoscaleNames) {
+      let found: boolean = false;
+      for (let metric of this.kubeResource.spec.metrics) {
+        if (metric.resource.name === name) {
+          found = true;
+          break;
+        }
+      }
+
+      if (!found) {
+        tempName = name;
+        break;
+      }
+    }
+
+    if (tempName === "") {
+      return;
+    }
+
+    let metric = {
+      type: "Resource",
+      resource: {
+        name: tempName,
+        targetAverageUtilization: 80,
+      }
+    };
+    this.kubeResource.spec.metrics.push(metric);
+  }
+
+  onDeleteMetric(i: number) {
+    this.kubeResource.spec.metrics.splice(i, 1);
+  }
+
+  metricChange(typeName: string, i: number) {
+    this.kubeResource.spec.metrics[i].resource.name = typeName;
+  }
+
   isValidResource(): boolean {
     if (super.isValidResource() === false) {
       return false;
@@ -132,13 +182,39 @@ export class CreateEditAutoscaletplComponent extends CreateEditResourceTemplate 
     if (this.kubeResource.spec.minReplicas > this.kubeResource.spec.maxReplicas) {
       return false;
     }
-    if (this.kubeResource.spec.targetCPUUtilizationPercentage <= 0) {
-      return false;
-    }
+
     if (this.kubeResource.spec.scaleTargetRef.name === '') {
       return false;
     }
+
+    if (this.kubeResource.spec.metrics.length == 0 ) {
+      return false;
+    }
+
+    let nameSet = new Map<string, Boolean>()
+
+    for (let metric of this.kubeResource.spec.metrics) {
+      let arg = metric.resource.targetAverageUtilization;
+      if (nameSet[metric.resource.name] || arg <= 0 || arg > 100) {
+        return false;
+      }
+      nameSet.set(metric.resource.name, true);
+    }
+
     return true;
+  }
+
+  onOpenModal(){
+    let resourceObj = JSON.parse(JSON.stringify(this.kubeResource));
+    resourceObj = this.generateResource(resourceObj);
+    this.aceEditorService.announceMessage(AceEditorMsg.Instance(resourceObj, true));
+  }
+
+  generateResource(kubeResource: any): any {
+    kubeResource.metadata.name = this.resource.name;
+    kubeResource.metadata.labels = this.generateLabels(this.kubeResource.metadata.labels);
+    console.log('kubeResource', kubeResource);
+    return kubeResource;
   }
 
   // 监听提交表单的事件

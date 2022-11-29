@@ -42,10 +42,24 @@
         <label class="required">{{'TEMPLATE.MAX_REPLICAS' | translate}}</label>
         <input type="number" clrInput [ngModelOptions]="{standalone: true}" [(ngModel)]="kubeResource.spec.maxReplicas">
       </clr-input-container>
-      <clr-input-container>
-        <label class="required">{{'TEMPLATE.CPU_THRESHOLD' | translate}}</label>
-        <input type="number" clrInput [ngModelOptions]="{standalone: true}" [(ngModel)]="kubeResource.spec.targetCPUUtilizationPercentage">
-      </clr-input-container>
+
+      <div *ngFor="let metric of kubeResource.spec.metrics; let j = index;" style="display:flex; align-items:flex-end;">
+
+        <label>{{'TEMPLATE.SCHEDULING_METRIC' | translate}}</label>
+        <select clrSelect  (change)="metricChange($event.target.value, j)">
+          <option value="cpu" [selected]="metric.resource?.name == 'cpu'">CPU</option>
+          <option value="memory" [selected]="metric.resource?.name == 'memory'">memory</option>
+        </select>
+
+        <input type="number" class="clr-input" [ngModelOptions]="{standalone: true}" [(ngModel)]="metric.resource.targetAverageUtilization" min="1" max="100">
+        <clr-icon  style="margin-left: 100px;" size="24" (click)="onDeleteMetric(j)" shape="trash" [title]="'TEMPLATE.DELETE_SCHEDULING_METRIC' | translate" class="is-solid">
+        </clr-icon>
+      </div>
+
+      <button class="btn btn-primary" (click)="onAddMetric($event)">
+        <clr-icon shape="add"></clr-icon>
+        {{'TEMPLATE.ADD_SCHEDULING_METRIC' | translate}}
+      </button>
     </wayne-collapse>
   </form>
 </div>
