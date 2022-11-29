@@ -25,7 +25,7 @@ export class SignInComponent implements OnInit {
   constructor(private authoriseService: AuthoriseService,
               private route: ActivatedRoute,
               public authService: AuthService) {
-    this.ismobile = isMobile();
+    this.ismobile = this.isMobile();
   }
 
   ngOnInit(): void {
