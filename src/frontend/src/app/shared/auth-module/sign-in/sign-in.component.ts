@@ -17,6 +17,7 @@ export class SignInComponent implements OnInit {
   username: string;
   password: string;
   isSubmitOnGoing: boolean;
+  ismobile: boolean;
   ngForm: NgForm;
   @ViewChild('ngForm', { static: true })
   currentForm: NgForm;
@@ -24,6 +25,7 @@ export class SignInComponent implements OnInit {
   constructor(private authoriseService: AuthoriseService,
               private route: ActivatedRoute,
               public authService: AuthService) {
+    this.ismobile = isMobile();
   }
 
   ngOnInit(): void {
@@ -88,6 +90,14 @@ export class SignInComponent implements OnInit {
   getTitle() {
     const imagePrefix = this.authService.config['system.title'];
     return imagePrefix ? imagePrefix : 'Basa';
+  }
+
+  isMobile() {
+    if(window.navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)) {
+      return false; // 移动端
+    }else{
+      return true; // PC端
+    }
   }
 
 }
