@@ -6,8 +6,8 @@ import (
 	appV1 "k8s.io/api/apps/v1"
 	"k8s.io/api/core/v1"
 
-	"git.lianjia.com/KubeService/kubernetes/wayne/src/backend/models"
-	"git.lianjia.com/KubeService/kubernetes/wayne/src/backend/util"
+	"github.com/kubeservice-stack/basa/src/backend/models"
+	"github.com/kubeservice-stack/basa/src/backend/util"
 )
 
 func DeploymentPreDeployV1(kubeDeployment *appV1.Deployment, deploy *models.Deployment,
