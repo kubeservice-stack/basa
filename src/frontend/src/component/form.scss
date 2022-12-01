@@ -57,7 +57,8 @@ label.required:after {
   margin-top: 5px;
 }
 .clr-toggle-wrapper .clr-col-md-2{
-  max-width: none;
+  width: 180px !important;
+  max-width: 300px !important;
 }
 .clr-textarea-wrapper textarea.clr-textarea {
   width: 60%;

@@ -28,7 +28,7 @@
                     id="{{cluster.name}}-check" name="{{cluster.name}}-check">
                   <label for="{{cluster.name}}-check">{{cluster.name}}</label>
                 </label>
-                <input class="clr-input" style="margin-left: 20px;" [placeholder]="'DEPLOYMENT.NUM' | translate"
+                <input class="clr-input" style="margin-left: 20px; width: 80px;" [placeholder]="'DEPLOYMENT.NUM' | translate"
                   [(ngModel)]="clusterMetas[cluster.name].value" id="{{cluster.name}}-replica" name="{{cluster.name}}-replica"
                   type="number">
               </div>

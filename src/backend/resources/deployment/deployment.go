@@ -166,7 +166,8 @@ func DeleteDeployment(cli *kubernetes.Clientset, name, namespace string) error {
 }
 
 func UpdateScale(cli *kubernetes.Clientset, deploymentname string, namespace string, newreplica int32) error {
-	deployments := cli.AppsV1beta1().Deployments(namespace)
+	//deployments := cli.AppsV1beta1().Deployments(namespace)
+	deployments := cli.AppsV1().Deployments(namespace)
 	deployment, err := deployments.Get(deploymentname, metaV1.GetOptions{})
 	if err != nil {
 		return err

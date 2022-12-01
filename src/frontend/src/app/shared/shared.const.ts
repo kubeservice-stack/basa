@@ -40,6 +40,10 @@ export const LoginTokenKey = 'wayne_token';
 
 export const AdminDefaultApiId = 0;
 
+export const enum CantainerType {
+  CANTAINERD, SERVERLESS
+}
+
 export const enum AlertType {
   DANGER, WARNING, INFO, SUCCESS
 }

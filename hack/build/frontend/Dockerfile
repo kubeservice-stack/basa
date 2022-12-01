@@ -16,6 +16,14 @@ FROM openresty/openresty:1.15.8.3-2-centos
 
 COPY --from=frontend /workspace/dist/ /usr/local/openresty/nginx/html/
 
+ENV DOMAIN=https://s3.kubeservice.cn/
+
+RUN sed -i "s#src=\"runtime#src=\"${DOMAIN}runtime#g" /usr/local/openresty/nginx/html/index.html
+RUN sed -i "s#src=\"polyfills#src=\"${DOMAIN}polyfills#g" /usr/local/openresty/nginx/html/index.html
+RUN sed -i "s#src=\"scripts#src=\"${DOMAIN}scripts#g" /usr/local/openresty/nginx/html/index.html
+RUN sed -i "s#src=\"vendor#src=\"${DOMAIN}vendor#g" /usr/local/openresty/nginx/html/index.html
+RUN sed -i "s#src=\"main#src=\"${DOMAIN}main#g" /usr/local/openresty/nginx/html/index.html
+
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     sed -i '/index  index.html index.htm;/a\        try_files $uri $uri/ /index.html;' /etc/nginx/conf.d/default.conf
 

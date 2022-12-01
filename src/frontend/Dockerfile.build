@@ -1,9 +1,0 @@
-FROM node:10.16
-
-WORKDIR /workspace
-
-COPY src/frontend  /workspace
-
-RUN npm install --registry=https://registry.npmmirror.com
-
-RUN npm run build:aot

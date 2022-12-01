@@ -1,5 +1,5 @@
 window.CONFIG = {
-    URL: 'http://yourip:8080',
+    URL: 'https://api.kubeservice.cn',
     RAVEN: false,
     RAVEN_DSN: 'RAVEN_DSN'
 };

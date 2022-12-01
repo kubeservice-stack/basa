@@ -1,10 +1,10 @@
 package version
 
 import (
-	"git.lianjia.com/KubeService/kubernetes/wayne/src/backend/controllers/base"
-	"git.lianjia.com/KubeService/kubernetes/wayne/src/backend/models"
-	"git.lianjia.com/KubeService/kubernetes/wayne/src/backend/resources/version"
-	"git.lianjia.com/KubeService/kubernetes/wayne/src/backend/util/logs"
+	"github.com/kubeservice-stack/basa/src/backend/controllers/base"
+	"github.com/kubeservice-stack/basa/src/backend/models"
+	"github.com/kubeservice-stack/basa/src/backend/resources/version"
+	"github.com/kubeservice-stack/basa/src/backend/util/logs"
 )
 
 type KubeVersionController struct {

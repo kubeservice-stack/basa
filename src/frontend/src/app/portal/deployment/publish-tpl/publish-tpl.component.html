@@ -16,8 +16,8 @@
                 </label>
                 <ng-container *ngIf="actionType==0 || actionType==2 || actionType == 5">
                   <input class="clr-input" placeholder="部署份数" [(ngModel)]="clusterMetas[cluster].value" id="{{cluster}}-replica" [readonly]="actionType == 2"
-                    name="{{cluster}}-replica" type="number"  style="margin-left: 20px;">
-                  <span class="clr-subtext" *ngIf="!replicaValidation(cluster)">部署份数超过系统最大限制{{replicaLimit}}</span>
+                    name="{{cluster}}-replica" type="number"  style="margin-left: 20px; width: 80px;" min="0">
+                  <span class="clr-subtext" *ngIf="!replicaValidation(cluster)">部署份数超过系统最大限制{{replicaLimit}}或小于0</span>
                 </ng-container>
               </div>
             </div>

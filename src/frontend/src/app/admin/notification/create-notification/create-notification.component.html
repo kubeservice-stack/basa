@@ -3,33 +3,28 @@
   <div class="modal-body">
     <form>
       <section class="form-block">
-        <div class="form-group">
-          <label class="clr-col-md-3 form-group-label-override required">标题</label>
-          <label class="tooltip tooltip-validation tooltip-md tooltip-bottom-left">
-            <input type="text" size="1024" [(ngModel)]="notify.title" [ngModelOptions]="{standalone: true}" required>
-          </label>
+        <clr-input-container>
+          <label class="required">标题</label>
+          <input clrInput type="text" id="notify_title" [ngModelOptions]="{standalone: true}" [(ngModel)]="notify.title" name="notify_title" size="1024" required>
+        </clr-input-container>
+         <clr-select-container>
+          <label class="required">类型</label>
+          <select clrSelect name="notify_type" [(ngModel)]="notify.type" [ngModelOptions]="{standalone: true}" type="string" required>
+            <option [ngValue]="'公告'" selected="selected">公告</option>
+            <option [ngValue]="'警告'">警告</option>
+          </select>
+        </clr-select-container>
+        <clr-textarea-container>
+          <label>内容</label>
+          <textarea id="notify_message" clrTextarea [(ngModel)]="notify.message" name="notify_message" rows="3" cols="580"></textarea>
+        </clr-textarea-container>
+        <markdown [data]="notify.message"></markdown>
+        <div class="modal-footer">
+          <button class="btn btn-outline" type="button"
+            (click)="cancelCreateNotification()">{{'BUTTON.CANCEL' | translate}}</button>
+          <button type="button" class="btn btn-primary" [disabled]="!isValid()" (click)="doCreateNotifycation()">创建</button>
         </div>
-        <div class="form-group">
-          <label class="clr-col-md-3 form-group-label-override required">类型</label>
-          <div class="select">
-            <select [(ngModel)]="notify.type" [ngModelOptions]="{standalone: true}" type="string">
-              <option [ngValue]="'公告'">公告</option>
-              <option [ngValue]="'警告'">警告</option>
-            </select>
-          </div>
-        </div>
-
       </section>
     </form>
-    <textarea [(ngModel)]="notify.message"></textarea>
-
-    <markdown [data]="notify.message"></markdown>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-outline" type="button"
-            (click)="cancelCreateNotification()">{{'BUTTON.CANCEL' | translate}}</button>
-    <button type="button" class="btn btn-primary" [disabled]="!isValid()" (click)="doCreateNotifycation()">
-      创建
-    </button>
   </div>
 </clr-modal>

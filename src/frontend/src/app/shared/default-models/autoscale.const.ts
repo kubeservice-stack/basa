@@ -1,17 +1,26 @@
 export const defaultAutoscale = `{
-  "apiVersion": "autoscaling/v1",
+  "apiVersion": "autoscaling/v2beta1",
   "kind": "HorizontalPodAutoscaler",
   "metadata": {
-    "name": ""
+    "name": "",
+    "labels": {}
   },
   "spec": {
     "maxReplicas": 3,
     "minReplicas": 1,
     "scaleTargetRef": {
-        "apiVersion": "extensions/v1beta1",
+        "apiVersion": "apps/v1",
         "kind": "Deployment",
         "name": ""
     },
-    "targetCPUUtilizationPercentage": 80
+    "metrics": [
+      {
+        "type":"Resource",
+        "resource": {
+          "name": "cpu",
+          "targetAverageUtilization": 80
+        }
+      }
+    ]
   }
 }`;
