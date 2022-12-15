@@ -101,7 +101,6 @@ func (c *KubePodController) PodStatistics() {
 // @Description find pods by resource type
 // @Param	pageNo		query 	int	false		"the page current no"
 // @Param	pageSize		query 	int	false		"the page size"
-// @Param	type		query 	string	true		"the query type. deployment, statefulset, daemonSet, job, pod"
 // @Param	name		query 	string	true		"the query resource name."
 // @Success 200 {object} models.Deployment success
 // @router /namespaces/:namespace/clusters/:cluster [get]
@@ -211,13 +210,12 @@ func (c *KubePodController) Create() {
 // @Description find Pod by cluster
 // @Param	cluster		path 	string	true		"the cluster name"
 // @Param	namespace		path 	string	true		"the namespace name"
-// @Param	name		path 	string	true		"the pod name want to create"
 // @Success 200 {object} models.Deployment success
-// @router /namespaces/:namespace/clusters/:cluster [get]
+// @router /:pod/namespaces/:namespace/clusters/:cluster [get]
 func (c *KubePodController) Get() {
 	cluster := c.Ctx.Input.Param(":cluster")
 	namespace := c.Ctx.Input.Param(":namespace")
-	name := c.Ctx.Input.Param("name")
+	name := c.Ctx.Input.Param(":pod")
 	manager := c.Manager(cluster)
 	result, err := manager.Client.CoreV1().Pods(namespace).Get(name, metaV1.GetOptions{})
 	if err != nil {
