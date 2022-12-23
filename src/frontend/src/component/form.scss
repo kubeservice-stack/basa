@@ -57,8 +57,7 @@ label.required:after {
   margin-top: 5px;
 }
 .clr-toggle-wrapper .clr-col-md-2{
-  width: 180px !important;
-  max-width: 300px !important;
+  max-width: none;
 }
 .clr-textarea-wrapper textarea.clr-textarea {
   width: 60%;
@@ -74,4 +73,5 @@ label.required:after {
 }
 .clr-checkbox-wrapper label{
   white-space: nowrap;
+  min-width: 180px;
 }

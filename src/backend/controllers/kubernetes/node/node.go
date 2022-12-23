@@ -33,6 +33,7 @@ func (c *KubeNodeController) URLMapping() {
 	c.Mapping("Update", c.Update)
 	c.Mapping("Get", c.Get)
 	c.Mapping("Delete", c.Delete)
+	c.Mapping("Terminal", c.Terminal)
 }
 
 func (c *KubeNodeController) Prepare() {

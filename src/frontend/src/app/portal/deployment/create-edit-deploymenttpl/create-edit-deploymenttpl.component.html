@@ -498,7 +498,5 @@
   <button type="button" class="btn btn-primary" (click)="openModal()">{{'BUTTON.ADVANCED_CONFIG' | translate}}</button>
   <button type="button" class="btn btn-primary" [disabled]="!isValid" (click)="onSubmit()">{{'BUTTON.SUBMIT' |
     translate}}</button>
-  <span style="color: red">{{'TEMPLATE.PRICE_TOTAL' | translate}}{{totalFee | number:'1.2-2' }}{{'UNIT.PRICE' |
-    translate}}</span>
 </div>
 <wayne-ace-editor (outputObj)="saveDeployment($event)"></wayne-ace-editor>
