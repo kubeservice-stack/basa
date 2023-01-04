@@ -27,7 +27,7 @@ jobs:
           -
             name: basa-backend
             image: kubeservice-stack/basa-backend
-            file: ./hack/build/Dockerfile
+            file: ./hack/build/backend/Dockerfile
             platforms: linux/amd64,linux/arm64
 
     steps:
