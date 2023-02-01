@@ -7,6 +7,8 @@
 
 Kubernetes multi-cluster management and publishing platform
 
+## Demo platform
+[https://play.kubeservice.cn/](https://play.kubeservice.cn/)
 
 ## License
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkubeservice-stack%2Fbasa.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkubeservice-stack%2Fbasa?ref=badge_large)
